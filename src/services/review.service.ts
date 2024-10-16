@@ -4,15 +4,20 @@ import { notFound } from "../error/NotFoundError";
 import { Game } from "../models/game.model";
 
 export class ReviewService {
+
+    // Récupére toutes les reviews
     public async getAllReviews(): Promise<ReviewDTO[]> {
         const reviews = await Review.findAll();
         return reviews;
     }
+
+    // Récupére une review précise
     public async getReviewById(id: number): Promise<ReviewDTO | null> {
         const review = await Review.findByPk(id);
         return review;
     }
 
+    // Créer une review
     public async createReview(reviewData: CreateReviewDTO): Promise<ReviewDTO> {
         const game = await Game.findByPk(reviewData.gameId);
         if (!game) {
@@ -22,6 +27,7 @@ export class ReviewService {
         return newReview;
     }
 
+    // Mets à jour une review
     public async updateReview(id: number, reviewData: Partial<CreateReviewDTO>): Promise<ReviewDTO | null> {
         const review = await Review.findByPk(id);
         if (!review) {
@@ -44,7 +50,7 @@ export class ReviewService {
         return review;
     }
 
-
+    // Supprime une review
     public async deleteReview(id: number): Promise<void> {
         const review = await Review.findByPk(id);
         if (review) {

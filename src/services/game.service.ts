@@ -6,6 +6,8 @@ import { Review } from "../models/review.model";
 import { notFound } from "../error/NotFoundError";
 
 export class GameService {
+
+  // Récupére tous les jeux
   public async getAllGames(): Promise<GameDTO[]> {
     return Game.findAll({
       include: [
@@ -16,10 +18,13 @@ export class GameService {
       ],
     });
   }
+
+  // Récupére un jeu précis
   public async getGameById(id: number): Promise<Game | null> {
     return Game.findByPk(id);
   }
 
+  // Créer un jeu
   public async createGame(
     title: string,
     IdConsole: number
@@ -27,6 +32,7 @@ export class GameService {
     return Game.create({ title: title, console_id: IdConsole });
   }
 
+  // Mets à jour un jeu
   public async updateGame(id: number, title?: string, idConsole?: number): Promise<Game | null> {
     const game = await Game.findByPk(id);
     if (game) {
@@ -38,6 +44,7 @@ export class GameService {
     return null;
   }
 
+  // Supprime un jeu
   public async deleteGame(id: number): Promise<void> {
     const games = await Game.findByPk(id);
     if (games) {
@@ -53,6 +60,7 @@ export class GameService {
     }
   }
 
+  // Récupére les reviews par rapport à un jeu
   public async getAllReviewsByGameById(id: number): Promise<Review[] | null> {
     const reviewsList = await Review.findAll({ where: { gameId: id } });
     return reviewsList;

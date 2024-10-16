@@ -5,7 +5,6 @@ import { consoleService } from "../services/console.service";
 import { ConsoleDTO } from "../dto/console.dto";
 import { notFound } from "../error/NotFoundError";
 import { GameDTO } from "../dto/game.dto";
-import { not } from "joi";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -51,6 +50,7 @@ export class ConsoleController extends Controller {
     return updatedConsole;
   }
 
+  // Permets de récupérer les jeux d'une console
   @Get("{id}/games")
   public async getAllGamesByConsoleById(@Path() id: number): Promise<GameDTO[]> {
     const console = await consoleService.getConsoleById(id);

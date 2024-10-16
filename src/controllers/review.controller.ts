@@ -6,16 +6,22 @@ import { notFound } from "../error/NotFoundError";
 @Route("reviews")
 @Tags("Reviews")
 export class ReviewController extends Controller {
+
+    // Permets de récupérer toutes les reviews
     @Get("/")
     public async getAllReviews(): Promise<ReviewDTO[]> {
         return reviewService.getAllReviews();
     }
+
+    // Permets de récupérer une review
     @Get("{id}")
     public async getReviewById(@Path() id: number): Promise<ReviewDTO> {
         const review = await reviewService.getReviewById(id);
         if (!review) notFound("Review");
         return review;
     }
+
+    // Permets de créer une review
     @Post("/")
     public async createReview(@Body() reviewData: CreateReviewDTO): Promise<ReviewDTO> {
         return reviewService.createReview(reviewData);
@@ -28,6 +34,8 @@ export class ReviewController extends Controller {
         if (!updatedReview) notFound("Review");
         return updatedReview;
     }
+
+    // Permets de supprimer une review
     @Delete("{id}")
     public async deleteReview(@Path() id: number): Promise<void> {
         await reviewService.deleteReview(id);

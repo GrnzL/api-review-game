@@ -49,6 +49,7 @@ export class ConsoleService {
     return null;
   }
 
+  // Récupérer les jeux présents dans une console
   public async getAllGamesByConsoleById(id: number): Promise<Game[] | null> {
     const gamesList = await Game.findAll({ where: { console_id: id } });
     return gamesList;
