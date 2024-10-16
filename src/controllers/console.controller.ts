@@ -4,6 +4,8 @@ import { Controller, Get, Post, Delete, Route, Path, Body, Tags, Patch } from "t
 import { consoleService } from "../services/console.service";
 import { ConsoleDTO } from "../dto/console.dto";
 import { notFound } from "../error/NotFoundError";
+import { GameDTO } from "../dto/game.dto";
+import { not } from "joi";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -48,5 +50,15 @@ export class ConsoleController extends Controller {
     if (!updatedConsole) notFound("Console");
     return updatedConsole;
   }
+
+  @Get("{id}/games")
+  public async getAllGamesByConsoleById(@Path() id: number): Promise<GameDTO[]> {
+    const console = await consoleService.getConsoleById(id);
+    if (!console) notFound("Console");
+    const game = await consoleService.getAllGamesByConsoleById(id);
+    if (!game) notFound("Game")
+    return game;
+  }
+
 }
 

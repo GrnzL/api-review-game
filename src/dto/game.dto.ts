@@ -8,10 +8,10 @@ export interface GameDTO {
 
 export interface CreateGameDTO {
   title: string;
-  IdConsole: number;
+  idConsole: number;
 }
 
 export interface UpdateGameDTO {
   title: string;
-  IdConsole: number;
+  idConsole: number;
 }

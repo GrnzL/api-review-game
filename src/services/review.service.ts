@@ -16,7 +16,7 @@ export class ReviewService {
     public async createReview(reviewData: CreateReviewDTO): Promise<ReviewDTO> {
         const game = await Game.findByPk(reviewData.gameId);
         if (!game) {
-            throw notFound("Game");
+            notFound("Game");
         }
         const newReview = await Review.create(reviewData);
         return newReview;
@@ -25,12 +25,12 @@ export class ReviewService {
     public async updateReview(id: number, reviewData: Partial<CreateReviewDTO>): Promise<ReviewDTO | null> {
         const review = await Review.findByPk(id);
         if (!review) {
-            throw notFound("Review");
+            notFound("Review");
         }
         if (reviewData.gameId) {
             const game = await Game.findByPk(reviewData.gameId);
             if (!game) {
-                throw notFound("Game");
+                notFound("Game");
             }
             review.gameId = reviewData.gameId;
         }
@@ -42,6 +42,16 @@ export class ReviewService {
         }
         await review.save();
         return review;
+    }
+
+
+    public async deleteReview(id: number): Promise<void> {
+        const review = await Review.findByPk(id);
+        if (review) {
+            await review.destroy();
+        } else {
+            notFound("Review");
+        }
     }
 }
 

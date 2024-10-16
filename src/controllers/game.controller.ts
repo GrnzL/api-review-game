@@ -1,7 +1,8 @@
-import { Body, Controller, Path, Post, Patch, Get, Route, Tags } from "tsoa";
+import { Body, Controller, Path, Post, Patch, Get, Route, Tags, Delete } from "tsoa";
 import { CreateGameDTO, GameDTO, UpdateGameDTO } from "../dto/game.dto";
 import { gameService } from "../services/game.service";
 import { notFound } from "../error/NotFoundError";
+import { ReviewDTO } from "../dto/review.dto";
 
 @Route("games")
 @Tags("Games")
@@ -14,8 +15,8 @@ export class GameController extends Controller {
   public async createGame(
     @Body() requestBody: CreateGameDTO
   ): Promise<GameDTO> {
-    const { title, IdConsole } = requestBody;
-    return gameService.createGame(title, IdConsole);
+    const { title, idConsole } = requestBody;
+    return gameService.createGame(title, idConsole);
   }
   @Get("{id}")
   public async getGameById(@Path() id: number): Promise<GameDTO> {
@@ -25,14 +26,28 @@ export class GameController extends Controller {
   }
 
   @Patch("{id}")
-  public async updateConsole(
+  public async updateGame(
     @Path() id: number,
     @Body() requestBody: UpdateGameDTO
   ): Promise<GameDTO> {
-    const { title, IdConsole } = requestBody;
-    const updatedConsole = await gameService.updateGame(id, title, IdConsole);
-    if (!updatedConsole) notFound("Console");
+    const { title, idConsole } = requestBody;
+    const updatedConsole = await gameService.updateGame(id, title, idConsole);
+    if (!updatedConsole) notFound("Game");
     return updatedConsole;
+  }
+
+  @Delete("{id}")
+  public async deleteGame(@Path() id: number): Promise<void> {
+    await gameService.deleteGame(id);
+  }
+
+  @Get("{id}/reviews")
+  public async getAllGamesByConsoleById(@Path() id: number): Promise<ReviewDTO[]> {
+    const game = await gameService.getGameById(id);
+    if (!game) notFound("Game");
+    const review = await gameService.getAllReviewsByGameById(id);
+    if (!review) notFound("Review")
+    return review;
   }
 }
 

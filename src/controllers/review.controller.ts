@@ -28,4 +28,8 @@ export class ReviewController extends Controller {
         if (!updatedReview) notFound("Review");
         return updatedReview;
     }
+    @Delete("{id}")
+    public async deleteReview(@Path() id: number): Promise<void> {
+        await reviewService.deleteReview(id);
+    }
 }

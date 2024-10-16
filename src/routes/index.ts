@@ -65,7 +65,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "title": {"dataType":"string","required":true},
-            "IdConsole": {"dataType":"double","required":true},
+            "idConsole": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -74,7 +74,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "title": {"dataType":"string","required":true},
-            "IdConsole": {"dataType":"double","required":true},
+            "idConsole": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -216,6 +216,36 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/reviews/:id',
+            ...(fetchMiddlewares<RequestHandler>(ReviewController)),
+            ...(fetchMiddlewares<RequestHandler>(ReviewController.prototype.deleteReview)),
+
+            async function ReviewController_deleteReview(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ReviewController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteReview',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/games',
             ...(fetchMiddlewares<RequestHandler>(GameController)),
             ...(fetchMiddlewares<RequestHandler>(GameController.prototype.getAllGames)),
@@ -307,9 +337,9 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.patch('/games/:id',
             ...(fetchMiddlewares<RequestHandler>(GameController)),
-            ...(fetchMiddlewares<RequestHandler>(GameController.prototype.updateConsole)),
+            ...(fetchMiddlewares<RequestHandler>(GameController.prototype.updateGame)),
 
-            async function GameController_updateConsole(request: ExRequest, response: ExResponse, next: any) {
+            async function GameController_updateGame(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     id: {"in":"path","name":"id","required":true,"dataType":"double"},
                     requestBody: {"in":"body","name":"requestBody","required":true,"ref":"UpdateGameDTO"},
@@ -324,7 +354,67 @@ export function RegisterRoutes(app: Router) {
                 const controller = new GameController();
 
               await templateService.apiHandler({
-                methodName: 'updateConsole',
+                methodName: 'updateGame',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/games/:id',
+            ...(fetchMiddlewares<RequestHandler>(GameController)),
+            ...(fetchMiddlewares<RequestHandler>(GameController.prototype.deleteGame)),
+
+            async function GameController_deleteGame(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new GameController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteGame',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/games/:id/reviews',
+            ...(fetchMiddlewares<RequestHandler>(GameController)),
+            ...(fetchMiddlewares<RequestHandler>(GameController.prototype.getAllGamesByConsoleById)),
+
+            async function GameController_getAllGamesByConsoleById(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new GameController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllGamesByConsoleById',
                 controller,
                 response,
                 next,
@@ -475,6 +565,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateConsole',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/consoles/:id/games',
+            ...(fetchMiddlewares<RequestHandler>(ConsoleController)),
+            ...(fetchMiddlewares<RequestHandler>(ConsoleController.prototype.getAllGamesByConsoleById)),
+
+            async function ConsoleController_getAllGamesByConsoleById(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ConsoleController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllGamesByConsoleById',
                 controller,
                 response,
                 next,
